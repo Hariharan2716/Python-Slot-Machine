@@ -1,5 +1,9 @@
 # Pyhton has no constant rule like JavaScript so we use naming rules of PEP 8
+# Capital Snake case is rule to use for constant variables
+
 MAX_LINES = 3
+MAX_BET = 100
+MIN_BET = 1
 
 def deposit():
   while True:
@@ -32,9 +36,37 @@ def get_number_of_line():
 
   return lines
 
+def get_bet():
+  while True:
+    amount = input("How much would you like to bet per line: $")
+    if amount.isdigit():
+      amount = int(amount)
+      line_bet = amount / MAX_LINES
+      # if 1 <= amount <= line_bet: #logic 1
+      if MIN_BET <= amount <= MAX_BET:
+        break
+      else:
+        print(f"Amount to be between ${MIN_BET} - {MAX_BET}")
+        # print("Please enter a valid bet amount per line.")
+
+    else:
+      print("Please enter a number.")
+
+  return amount 
 
 def main():
   balance = deposit()
   lines = get_number_of_line()
-  print(balance, lines)
+  # adding a conditon to check if the user input bet per line is within total balance
+  while True:
+    bet = get_bet()
+    total_bet = bet * lines
+
+    if total_bet > balance:
+      print(f"You do not have enough to bet that amount, your current balance is: ${balance}")
+    else:
+      break
+
+  print(f"You are betting ${bet} on {lines} lines. Total bet is {bet * lines}")
+  
 main()
